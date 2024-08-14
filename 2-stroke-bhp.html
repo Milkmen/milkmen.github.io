@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>2-Stroke Power Calculator</title>
+
+        <style>
+            body 
+            {
+                background-color: black;
+            }
+            * 
+            {
+                color: green;
+            }
+        </style>
+
+        <script>
+            function calc() 
+            {
+                var pressure = document.getElementById('pressure').value;
+                var bore = document.getElementById('bore').value;
+                var stroke = document.getElementById('stroke').value;
+                var cyl = document.getElementById('cyl').value;
+                var speed = document.getElementById('speed').value;
+                var radius = (bore / 25.4) / 2;
+
+                var P = pressure;
+                var L = stroke / 304.8;
+                var A = Math.PI * Math.pow(radius, 2);
+                var N = speed * cyl;
+
+                var BHP = (P*L*A*N) / 33000;
+                var displacement = (Math.PI * Math.pow(bore / 2, 2) * stroke * cyl) / 1000;
+                document.getElementById("bhp").value = BHP + " BHP";
+                document.getElementById("displacement").value = displacement + " cc";
+            }
+        </script>
+    </head>
+    <body>
+        <h1>2-Stroke Power Calculator</h1>
+        <br/>
+        <p>Mean Effective Pressure (PSI)  // RECOMMENDED: 70</p>
+        <input id="pressure" type="number" value="70" min="30" max="120" style="width: max(20vw, 4cm);"/>
+        <p>Cylinder Stroke (mm)</p>
+        <input id="stroke" type="number" value="100" min="10" max="1000" style="width: max(20vw, 4cm);"/>
+        <p>Cylinder Bore (mm)</p>
+        <input id="bore" type="number" value="100" min="10" max="1000" style="width: max(20vw, 4cm);"/>
+        <p>Cylinder Count</p>
+        <input id="cyl" type="number" value="1" min="1" max="16" style="width: max(20vw, 4cm);"/>
+        <p>Peak Speed (RPM)</p>
+        <input id="speed" type="number" value="8000" min="500" max="50000" style="width: max(20vw, 4cm);"/>
+        <br>
+        <button onclick="calc();">Calculate Horsepower</button>
+        <hr/>
+        <p>Engine BHP</p>
+        <input id="bhp" type="text" value="? BHP" readonly="true"/>
+        <p>Engine Displacement (cc)</p>
+        <input id="displacement" type="text" value="? cc" readonly="true"/>
+    </body>
+</html>
