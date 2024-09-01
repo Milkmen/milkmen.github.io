@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Supercharger Pressure Calculator</title>
+
+        <style>
+            body 
+            {
+                background-color: black;
+            }
+            * 
+            {
+                color: green;
+            }
+        </style>
+
+        <script>
+            function calc() 
+            {
+                var ve = document.getElementById('ve').value;
+                var engine_cc = document.getElementById('engine_cc').value;
+                var supercharger_cc = document.getElementById('supercharger_cc').value;
+                var ratio = document.getElementById('ratio').value;
+
+                var consumption = engine_cc / 2; // A 4-Stroke consumes its full displacement every 2 revs
+                var supercharger_air = supercharger_cc * ratio; 
+                var max_pressure = ((supercharger_air * (ve / 100)) - consumption) / consumption;
+
+                document.getElementById("intake_bar").value = max_pressure + " Bar";
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Supercharger Pressure Calculator</h1>
+        <br>
+        <p>This calculator tells you the maximum pressure a supercharger could build up using a given pulley ratio.</p>
+        <br/>
+        <p>Volumetric Efficiency (%)  // RECOMMENDED: 70</p>
+        <input id="ve" type="number" value="80" min="30" max="150" style="width: max(20vw, 4cm);"/>
+        <p>Engine Displacement (cc)</p>
+        <input id="engine_cc" type="number" value="1200" min="1" max="200000" style="width: max(20vw, 4cm);"/>
+        <p>Supercharger Displacement (cc)</p>
+        <input id="supercharger_cc" type="number" value="500" min="1" max="200000" style="width: max(20vw, 4cm);"/>
+        <p>Pulley Ratio</p>
+        <input id="ratio" type="number" value="2" min="0.01" max="100" style="width: max(20vw, 4cm);"/>
+        <br>
+        <button onclick="calc();">Calculate Horsepower</button>
+        <hr/>
+        <p>Max. Pressure (Bar)</p>
+        <input id="intake_bar" type="text" value="? Bar" readonly="true"/>
+    </body>
+</html>
